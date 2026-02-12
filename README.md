@@ -1,43 +1,41 @@
 # The Work-Study-Life Profile: A Quantified Self Analysis
 
-A data science project analyzing daily habits of a working student using unsupervised learning (K-Means clustering) and statistical validation to identify distinct behavioral profiles.
+A data science project analyzing daily habits of a working student using **exploratory data analysis**, **statistical techniques**, and **pattern identification** to understand behavioral profiles.
 
 ## Project Overview
 
-This study explores the concept of the "Quantified Self" by analyzing daily habits over a 74-day period. The project employs K-Means Clustering to identify distinct "Daily Profiles" and uses ANOVA to validate these clusters against mood and focus ratings.
+This study explores the concept of the "Quantified Self" by analyzing daily habits over an **81-day period** (November 2025 to February 2026). The project employs **K-Means clustering as an exploratory technique** to identify distinct "Daily Profiles" and uses **ANOVA** to validate whether these patterns significantly differ in terms of mood and focus ratings.
+
+**Focus**: Data Science Concepts - Understanding the dataset through statistical analysis, not predictive modeling.
 
 ## Project Structure
 
 The project is organized into separate notebooks for different phases:
 
-### Phase 1 & 2: Data Cleaning and Preprocessing
-**File:** `data_cleaning.ipynb`
+### Phase 1 & 2: Data Cleaning and Exploratory Data Analysis (EDA)
+**File:** `1data_cleaning.ipynb`
 - Load and inspect raw data
-- Handle missing values
+- Handle missing values and data quality issues
 - Parse and validate dates
-- Feature selection for clustering
-- StandardScaler normalization
+- **Exploratory Data Analysis**: Descriptive statistics, visualizations, correlation analysis
+- Feature selection for analysis
+- StandardScaler normalization (for clustering)
 - Save processed data
 
-### Phase 3 & 4: Clustering Analysis and Statistical Validation
-**File:** `clustering_analysis.ipynb`
-- K-Means clustering (k=3)
-- Comparative analysis (Hierarchical, DBSCAN, GMM)
-- Cluster profiling and visualization
-- ANOVA validation (Mood and Focus vs Clusters)
-- Post-hoc tests
+### Phase 3 & 4: Pattern Identification and Statistical Validation
+**File:** `2clustering_analysis.ipynb`
+- **K-Means clustering (k=3)** as an exploratory technique to identify behavioral patterns
+- Comparative analysis (Hierarchical, DBSCAN, GMM) for understanding
+- Cluster profiling and characterization
+- **ANOVA validation** (Mood and Focus vs Clusters)
+- Post-hoc tests (if ANOVA is significant)
+- Statistical interpretation of patterns
 
 ### Phase 5: Hypothesis Testing
-**File:** `hypothesis_testing.ipynb`
-- **Recovery vs. Inertia**: Do rest profiles precede deep work or low performance?
-- **Busy vs. Productive**: Can clustering distinguish busywork from flow state?
-- **Weekend Bleed**: Do work/study profiles intrude into weekends and affect mood?
-
-### Phase 6.2: Predictive Modeling (Future Work)
-**File:** `predictive_model.ipynb`
-- Random Forest model to predict Focus_Rating
-- Feature importance analysis
-- Productivity forecast based on daily inputs
+**File:** `3hypothesis_testing.ipynb`
+- **Recovery vs. Inertia**: Do rest profiles precede deep work or low performance? (Chi-square test)
+- **Busy vs. Productive**: Can data analysis distinguish busywork from flow state? (Correlation analysis)
+- **Weekend Bleed**: Do work/study profiles intrude into weekends and affect mood? (Crosstabulation, chi-square)
 
 ## Setup
 
@@ -49,11 +47,11 @@ conda activate quantified_env
 
 2. Install dependencies:
 ```bash
-pip install pandas numpy matplotlib seaborn scikit-learn scipy jupyter
+pip install pandas numpy matplotlib seaborn scikit-learn scipy jupyter statsmodels
 ```
 
 3. Run notebooks in order:
-   - `data_cleaning.ipynb` → `clustering_analysis.ipynb` → `hypothesis_testing.ipynb` → `predictive_model.ipynb`
+   - `1data_cleaning.ipynb` → `2clustering_analysis.ipynb` → `3hypothesis_testing.ipynb`
 
 ## Data
 
@@ -75,18 +73,31 @@ pip install pandas numpy matplotlib seaborn scikit-learn scipy jupyter
 - Distraction_Time_Mins
 - Tasks_Completed
 
-**Targets:**
+**Targets (Outcomes):**
 - Mood_Rating (1-5)
 - Focus_Rating (1-5)
 
-## Expected Clusters
+## Identified Behavioral Profiles
 
-Based on methodology:
-1. **Cluster 0: "The Commuter Grind"** - High travel time, moderate work, low study
-2. **Cluster 1: "The Deep Work / WFH Day"** - Zero/low travel, high work and study
-3. **Cluster 2: "The Distracted Recovery"** - High distraction, high sleep, low tasks
+Based on clustering analysis (exploratory technique):
+1. **Cluster 0: "The Commuter Grind"** (64.2% of days) - High travel time, moderate work, moderate study
+2. **Cluster 1: "The Deep Work / WFH Day"** (8.6% of days) - Zero/low travel, high work and study
+3. **Cluster 2: "The Distracted Recovery"** (27.2% of days) - High distraction, high sleep, low tasks
+
+## Statistical Methods Used
+
+- **Descriptive Statistics**: Mean, median, standard deviation, range
+- **Exploratory Data Analysis**: Histograms, box plots, scatter plots, correlation matrices
+- **Clustering**: K-Means (as pattern discovery tool)
+- **ANOVA**: One-way ANOVA to test differences across clusters
+- **Chi-square Tests**: For categorical relationships
+- **Correlation Analysis**: To examine variable relationships
+
+## Archive
+
+The `archive/` folder contains optional modeling notebooks (`4predictive_model.ipynb`, `5mlr_analysis.ipynb`) that are not part of the core data science analysis focus. These are kept for reference but are not required deliverables.
 
 ## Author
 
 Brando Allen A. Donato  
-Date: February 6, 2026
+Date: February 11, 2026
