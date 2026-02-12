@@ -5,5 +5,12 @@ conda create --name quantified_env python=3.9
 conda activate quantified_env
 
 #library installation
-pip install pandas numpy matplotlib seaborn scikit-learn scipy jupyter
+pip install pandas 
+pip install numpy 
+pip install matplotlib 
+pip install seaborn 
+pip install scikit-learn 
+pip install scipy 
+pip install jupyter
+pip install statsmodel
 # done

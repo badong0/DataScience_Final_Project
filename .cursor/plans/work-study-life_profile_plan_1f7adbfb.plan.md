@@ -1,6 +1,6 @@
 ---
 name: Work-Study-Life Profile Plan
-overview: A step-by-step plan to execute the Quantified Self / Work-Study-Life Profile project from project-description.md, covering data cleaning, preprocessing, K-Means clustering with comparative analysis (Hierarchical, DBSCAN, GMM), ANOVA validation, hypothesis testing, and optional predictive modeling.
+overview: A step-by-step plan to execute the Quantified Self / Work-Study-Life Profile project from project-description.md, covering data cleaning, preprocessing, K-Means clustering with comparative analysis (Hierarchical, DBSCAN, GMM), ANOVA validation, hypothesis testing, and Multiple Linear Regression (MLR) predictive modeling.
 todos: []
 isProject: false
 ---
@@ -147,20 +147,61 @@ Run alternative algorithms on the same scaled features and compare:
 
 ---
 
-## Phase 6: Results and Documentation
+## Phase 6: Multiple Linear Regression (MLR) Analysis
 
-### Step 6.1: Compile Results
+### Step 6.1: Feature Selection for MLR
+
+- Select features: Sleep_Hours, Music_Time_Hours, Travel Time (Hours), Work_Hours, Study_Hours, Chore_Time_Mins, Distraction_Time_Mins, Tasks_Completed
+- Targets: Mood_Rating and Focus_Rating
+- Split data into training (80%) and test (20%) sets, maintaining temporal order
+
+### Step 6.2: Train MLR Models
+
+- Build MLR model for Mood_Rating prediction
+- Build MLR model for Focus_Rating prediction
+- Use sklearn's LinearRegression for initial model fitting
+- Calculate performance metrics: RMSE, MAE, R²
+
+### Step 6.3: Statistical Analysis using Statsmodels
+
+- Use statsmodels.api.OLS for detailed statistical analysis
+- Extract coefficients, p-values, confidence intervals
+- Identify significant predictors (p < 0.05)
+- Calculate Adjusted R² for model comparison
+- Generate full regression summary tables
+
+### Step 6.4: Coefficient Analysis and Interpretation
+
+- Visualize coefficients using bar plots (positive vs negative effects)
+- Identify which factors most strongly influence Mood_Rating and Focus_Rating
+- Interpret coefficient magnitudes and directions
+- Compare significant predictors between Mood and Focus models
+
+### Step 6.5: Model Evaluation and Visualization
+
+- Plot predicted vs actual values (scatter plots)
+- Visualize residuals if needed
+- Compare training vs test performance
+- Document model performance metrics
+
+### Step 6.6: Results Compilation
+
+- Summary table of MLR model performance
+- Table of significant predictors with coefficients and p-values
+- Interpretation of findings
+- Integration with clustering results
+
+---
+
+## Phase 7: Results and Documentation
+
+### Step 7.1: Compile All Results
 
 - Summary table of cluster characteristics
 - ANOVA results table
 - Hypothesis test outcomes
+- MLR model results and interpretations
 - Figures suitable for [documentation/CCIT-CPT-001 ACM Paper Format.docx](documentation/CCIT-CPT-001 ACM Paper Format.docx)
-
-### Step 6.2: Optional Future Work – Predictive Modeling
-
-- Train Random Forest to predict `Focus_Rating` from Sleep_Hours, Travel Time, Work_Hours, Study_Hours, Distraction_Time_Mins (previous/current day)
-- Evaluate RMSE/MAE and feature importance
-- This creates a "Productivity Forecast" as described in Future Work
 
 ---
 
@@ -170,10 +211,11 @@ Run alternative algorithms on the same scaled features and compare:
 Final Proj Work Life/
 ├── data/
 │   └── Data Science Dataset - DATABASE.csv
-├── data_cleaning.ipynb         # Phase 1–2: Load, clean, preprocess
-├── clustering_analysis.ipynb   # Phase 3–4: K-Means, comparative (Hierarchical, DBSCAN, GMM), ANOVA
-├── hypothesis_testing.ipynb    # Phase 5: Recovery vs. Inertia, Busy vs. Productive, Weekend Bleed
-├── (optional) predictive_model.ipynb   # Phase 6.2: Random Forest
+├── 1data_cleaning.ipynb         # Phase 1–2: Load, clean, preprocess
+├── 2clustering_analysis.ipynb   # Phase 3–4: K-Means, comparative (Hierarchical, DBSCAN, GMM), ANOVA
+├── 3hypothesis_testing.ipynb    # Phase 5: Recovery vs. Inertia, Busy vs. Productive, Weekend Bleed
+├── 5mlr_analysis.ipynb          # Phase 6: Multiple Linear Regression (MLR) for Mood and Focus prediction
+├── 4predictive_model.ipynb      # (Optional) Phase 6.2: Random Forest for comparison
 └── project-description.md
 ```
 
@@ -214,7 +256,15 @@ flowchart TD
         E3[Weekend Bleed]
     end
 
-    A1 --> A2 --> B1 --> B2 --> B3 --> B4 --> C1 --> C2 --> C3 --> C4 --> C5 --> D1 --> D2 --> E1 --> E2 --> E3
+    subgraph phase6 [Phase 6: MLR Analysis]
+        F1[Feature Selection]
+        F2[Train MLR Models]
+        F3[Statsmodels Analysis]
+        F4[Coefficient Analysis]
+        F5[Model Evaluation]
+    end
+
+    A1 --> A2 --> B1 --> B2 --> B3 --> B4 --> C1 --> C2 --> C3 --> C4 --> C5 --> D1 --> D2 --> E1 --> E2 --> E3 --> F1 --> F2 --> F3 --> F4 --> F5
 ```
 
 

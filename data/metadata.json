@@ -1,0 +1,17 @@
+{
+  "clustering_features": [
+    "Sleep_Hours",
+    "Music_Time_Hours",
+    "Travel Time (Hours)",
+    "Work_Hours",
+    "Study_Hours",
+    "Chore_Time_Mins",
+    "Distraction_Time_Mins",
+    "Tasks_Completed"
+  ],
+  "targets": [
+    "Mood_Rating",
+    "Focus_Rating"
+  ],
+  "n_samples": 81
+}
