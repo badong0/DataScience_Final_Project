@@ -2,7 +2,7 @@ CCDATSCL Project: The Work-Study-Life Profile
 Author: Brando Allen A. Donato  Date: February 11, 2026
 
 Abstract
-This study explores the concept of the "Quantified Self" by analyzing the daily habits of a working student in Metro Manila over an 81-day period (November 2025 to February 2026). Addressing the challenges of balancing professional obligations, academic requirements, and personal well-being, this research employs a disciplined, manual data collection method to record daily behavioral metrics. The study utilizes exploratory data analysis (EDA) and statistical techniques to identify patterns and relationships within the dataset. K-Means clustering is applied as an exploratory technique to identify distinct "Daily Profiles" based on self-reported variables such as sleep duration, travel time, work/study hours, and digital distractions. Analysis of Variance (ANOVA) is conducted to validate whether these identified patterns significantly differ in terms of daily mood and focus ratings. Additionally, correlation analysis and hypothesis testing are employed to investigate behavioral relationships, including the "Recovery vs. Inertia" hypothesis, the "Busy vs. Productive" distinction, and the "Weekend Bleed" effect. The results aim to reveal hidden behavioral patterns and relationships within the dataset, providing insights into how daily inputs and behaviors relate to productivity and well-being outcomes.
+This study explores the concept of the "Quantified Self" by analyzing the daily habits of a working student in Metro Manila over an 81-day period (November 2025 to February 2026). Addressing the challenges of balancing professional obligations, academic requirements, and personal well-being, this research employs a disciplined, manual data collection method to record daily behavioral metrics. The study utilizes exploratory data analysis (EDA) and statistical techniques to understand and validate the dataset. Distribution analysis (histograms, box plots), time series trends, and correlation matrices are used to characterize the data. Independent samples t-tests and chi-square tests are applied to validate relationships (e.g., weekend vs. weekday differences in work hours, study hours, mood, focus, and sleep). Hypothesis testing is employed to investigate three behavioral hypotheses: the "Recovery vs. Inertia" hypothesis (whether rest days precede deep work or low-performance patterns), the "Busy vs. Productive" distinction (whether high-volume days can be distinguished by focus rating), and the "Weekend Bleed" effect (whether work/study patterns intrude into weekends and relate to mood). The results endorse the dataset as suitable for behavioral analysis and provide insights into how daily inputs and behaviors relate to productivity and well-being outcomes.
 
 I. Introduction
 1.1 Background & Motivation
@@ -17,7 +17,7 @@ General Research Question: "What patterns exist in daily inputs (music genre, sl
 
 To provide a granular analysis, this study specifically investigates three behavioral hypotheses:
 
-The "Recovery vs. Inertia" Hypothesis: Do "Rest Profiles" (High Leisure, Low Productivity) typically precede "Deep Work" patterns (suggesting recovery), or do they precede further low-performance patterns (suggesting a state of inertia)?
+The "Recovery vs. Inertia" Hypothesis: Do "Rest Days" (low work/study, high distraction by median thresholds) typically precede "Deep Work Days" (high work/study, low distraction), or do they precede further low-performance or other patterns (suggesting inertia or mixed transitions)?
 
 The "Busy vs. Productive" Distinction: Can data analysis distinguish between "High-Volume / Low-Focus" days (Busywork) and "High-Volume / High-Focus" days (Flow State) based on the relationship between Work_Hours and Distraction_Time?
 
@@ -28,15 +28,13 @@ The "Weekend Bleed" Effect: Do specific habit patterns strictly align with calen
 
 2. Preprocess and clean the dataset using Python libraries (Pandas) to handle missing values, outliers, and data quality issues.
 
-3. Conduct exploratory data analysis (EDA) including descriptive statistics, visualizations, and correlation analysis to understand the dataset structure and relationships.
+3. Conduct exploratory data analysis (EDA) including descriptive statistics, histograms, time series trends, box plots, and correlation matrices to understand and endorse the dataset structure and relationships.
 
-4. Apply K-Means clustering as an exploratory technique to identify natural groupings of daily behaviors and characterize distinct "Daily Profiles."
+4. Perform statistical analysis (independent samples t-tests, chi-square tests, correlation significance tests) to validate relationships between variables (e.g., weekend vs. weekday differences in work hours, study hours, mood, focus, sleep).
 
-5. Validate the significance of identified patterns using statistical tests (ANOVA) to determine if mood and focus ratings significantly differ across behavioral profiles.
+5. Test behavioral hypotheses using appropriate statistical methods (threshold-based definitions, t-tests, chi-square tests, crosstabulation) to investigate the Recovery vs. Inertia, Busy vs. Productive, and Weekend Bleed effects.
 
-6. Test behavioral hypotheses using appropriate statistical methods (chi-square tests, correlation analysis, crosstabulation) to investigate relationships between daily patterns and outcomes.
-
-7. Interpret findings in the context of productivity and well-being, providing evidence-based insights into daily behavior patterns.
+6. Interpret findings in the context of productivity and well-being, providing evidence-based insights into daily behavior patterns.
 
 1.4 Scope and Limitations
 This study is a single-subject case study (n=1) ranging from November 2025 to February 2026. The methodology relies entirely on self-reported data; variables such as Sleep_Hours and Distraction_Time are estimates rather than sensor-verified measurements. The dataset consists of 81 days, which limits the generalizability of findings. The study focuses on descriptive and exploratory analysis rather than predictive modeling.
@@ -48,8 +46,8 @@ Swan (2013) describes the "Quantified Self" as the use of technology for data ac
 2.2 The Cost of Distraction
 Research by Mark et al. (2008) highlights that interruptions and context switching significantly increase stress and the effort required to complete tasks. This supports the study's inclusion of Distraction_Time and Travel Time as critical variables impacting focus.
 
-2.3 Clustering Personal Data
-Adomavicius et al. (2019) explored the application of data science algorithms on personal datasets. This study validates their approach by using K-Means as an exploratory technique to identify behavioral patterns, proving that data analysis methods are applicable to behavioral analysis.
+2.3 Statistical Analysis of Personal Data
+Adomavicius et al. (2019) explored the application of data science methods on personal datasets. This study validates their approach by using descriptive statistics, distribution analysis, time series trends, correlation analysis, and hypothesis testing to identify and validate behavioral patterns, demonstrating that statistical methods are applicable to behavioral analysis.
 
 III. Methodology
 3.1 Participants
@@ -90,25 +88,18 @@ Outliers: Visual inspection using box plots and histograms identified potential 
 
 Data Type Conversion: Date column was parsed to datetime format. Categorical variables (Mode of Transport, Main_Music_Genre) were handled through one-hot encoding for numerical analysis.
 
-Feature Selection: For clustering analysis, the following features were selected:
-- Inputs: Sleep_Hours, Music_Time_Hours, Travel Time (Hours)
-- Behaviors: Work_Hours, Study_Hours, Chore_Time_Mins, Distraction_Time_Mins, Tasks_Completed
-- Targets (excluded from clustering): Mood_Rating, Focus_Rating
-
-Scaling: StandardScaler (Z-score normalization) was applied to clustering features to ensure all variables are on comparable scales for distance-based analysis.
+Variables for Analysis: Numerical variables (Sleep_Hours, Work_Hours, Study_Hours, Travel Time, Distraction_Time_Mins, Tasks_Completed, Mood_Rating, Focus_Rating) were used for distribution analysis, time series, correlation, and statistical tests. Categorical variables (e.g., Is_Weekend) were used for group comparisons and chi-square tests. Music_Time_Hours, Main_Music_Genre, Chore_Time_Mins, and Mode of Transport were collected and preprocessed but are not included in the primary analysis reported in the paper (aligned with the paper’s Table 1).
 
 3.5 Statistical Analysis Methods
 Descriptive Statistics: Mean, median, standard deviation, and range were calculated for all numerical variables.
 
-Exploratory Data Analysis: Histograms, box plots, scatter plots, and correlation matrices were used to visualize distributions and relationships.
-
-Clustering Analysis: K-Means clustering (k=3) was applied as an exploratory technique to identify natural groupings in the data. Cluster characteristics were analyzed through mean and standard deviation calculations.
+Exploratory Data Analysis: Histograms (all numerical variables), box plots (distributions and outliers), time series plots (trends over the 81-day period and weekly averages), and correlation matrices (Pearson correlation with significance) were used to visualize distributions and relationships and to endorse the dataset.
 
 Statistical Tests:
-- One-way ANOVA: To test if Mood_Rating and Focus_Rating significantly differ across clusters
-- Chi-square test: To analyze categorical relationships (e.g., Recovery vs. Inertia transitions)
-- Correlation analysis: To examine relationships between continuous variables
-- Crosstabulation: To investigate associations between categorical variables (e.g., cluster vs. weekend)
+- Independent samples t-tests: To compare means between weekend and weekday for Work_Hours, Study_Hours, Mood_Rating, Sleep_Hours, and Focus_Rating
+- Chi-square test: To test associations between categorical variables (e.g., Work/Study Profile vs. Is_Weekend, Weekend × High Volume)
+- Correlation significance: Pearson correlation with p-values to identify significant relationships between continuous variables
+- Hypothesis testing: Threshold-based definitions (e.g., Rest Day, Deep Work Day, Productivity Type) with t-tests and chi-square to test Recovery vs. Inertia, Busy vs. Productive, and Weekend Bleed hypotheses
 
 Visualization Tools: Matplotlib and Seaborn for creating charts, graphs, and statistical visualizations.
 
@@ -124,69 +115,34 @@ The dataset consists of 81 days of daily behavioral data. Descriptive statistics
 - Mood_Rating: Mean = 3.4 (Range: 1-5)
 - Focus_Rating: Mean = 3.2 (Range: 1-5)
 
-4.2 Exploratory Data Analysis Findings
-Correlation Analysis: Strong positive correlations were found between Work_Hours and Study_Hours (r = 0.45), suggesting productive days tend to combine both activities. Negative correlations were observed between Travel Time and Study_Hours (r = -0.32), indicating commute time reduces study opportunities.
+4.2 Distribution Analysis and Time Series
+Histograms: Histograms for all numerical variables (Sleep_Hours, Work_Hours, Study_Hours, Travel Time, Distraction_Time_Mins, Tasks_Completed, Mood_Rating, Focus_Rating) were generated to characterize distributions. Box plots were used to visualize spread and identify outliers.
 
-Time-Series Trends: Visual analysis of daily patterns over the 81-day period reveals weekly cycles, with weekends showing distinct behavioral patterns compared to weekdays.
+Time Series Trends: Daily and weekly trend plots over the 81-day period show temporal patterns. Weekly averages reveal cycles and differences between weekend and weekday behavior for key variables.
 
-4.3 Clustering Results (K-Means)
-The K-Means algorithm (k=3) identified three distinct types of days based on behavioral features:
+4.3 Correlation Analysis
+Correlation matrices (Pearson) were computed for numerical variables. Significant correlations were identified using p-values. Results are reported in the correlation heatmap (e.g., relationships between work/study hours, distraction, mood, and focus). The correlation structure supports the use of the dataset for behavioral analysis.
 
-Cluster 0: "The Commuter Grind" (52 days, 64.2%)
-Characteristics: Mean Travel Time = 1.80 hours, Mean Work_Hours = 6.81 hours, Mean Study_Hours = 4.59 hours, Mean Distraction_Time = 210.75 minutes, Mean Sleep_Hours = 6.26 hours, Mean Tasks_Completed = 4.42, Mean Mood_Rating = 3.42, Mean Focus_Rating = 3.17
+4.4 Statistical Validation (T-Tests and Chi-Square)
+Independent samples t-tests were performed to compare weekend vs. weekday for Work_Hours, Study_Hours, Mood_Rating, Sleep_Hours, and Focus_Rating. Results indicate whether weekend and weekday means differ significantly (α = 0.05).
 
-Observation: These days represent the typical working student life, where travel time is significant and work/study hours are moderate. This is the most common daily profile.
-
-Cluster 1: "The Deep Work / WFH Day" (7 days, 8.6%)
-Characteristics: Mean Travel Time = 0.00 hours, Mean Work_Hours = 0.00 hours, Mean Study_Hours = 0.00 hours
-
-Observation: This cluster appears to represent days with minimal activity or data entry issues. Further investigation is needed to understand this pattern.
-
-Cluster 2: "The Distracted Recovery" (22 days, 27.2%)
-Characteristics: Mean Travel Time = 1.73 hours, Mean Work_Hours = 0.55 hours, Mean Study_Hours = 4.62 hours, Mean Distraction_Time = 309.50 minutes, Mean Sleep_Hours = 8.41 hours, Mean Tasks_Completed = 2.27, Mean Mood_Rating = 3.45, Mean Focus_Rating = 3.27
-
-Observation: These days are characterized by high distraction time, high sleep hours, and low task completion, suggesting recovery or low-productivity periods.
-
-4.4 Statistical Validation (ANOVA)
-ANOVA tests were performed to determine if Mood_Rating and Focus_Rating significantly differ across the three clusters.
-
-Mood_Rating ANOVA:
-- F-statistic: [To be calculated from analysis]
-- P-value: [To be calculated from analysis]
-- Interpretation: If p < 0.05, cluster type significantly affects mood ratings.
-
-Focus_Rating ANOVA:
-- F-statistic: [To be calculated from analysis]
-- P-value: [To be calculated from analysis]
-- Interpretation: If p < 0.05, cluster type significantly affects focus ratings.
+Chi-square tests were applied to categorical relationships (e.g., Work/Study Profile × Is_Weekend, Weekend × High Volume). Results are reported with chi-square statistic, p-value, and degrees of freedom.
 
 4.5 Hypothesis Testing Results
-Recovery vs. Inertia Hypothesis:
-Chi-square test results comparing transitions from Rest Profile (Cluster 2) to Deep Work (Cluster 1) vs. Low Performance patterns:
-- Observed frequencies: [To be calculated]
-- Expected frequencies: [To be calculated]
-- Chi-square statistic: [To be calculated]
-- P-value: [To be calculated]
+Recovery vs. Inertia Hypothesis: Rest Days (low work/study, high distraction) and Deep Work Days (high work/study, low distraction) were defined using median thresholds. Transitions from Rest Days to the next day were classified as Rest → Deep Work, Rest → Low Performance, or Rest → Other. Results show the proportion of each transition type; the conclusion (e.g., inertia pattern dominates when no recovery transitions are observed) is reported.
 
-Busy vs. Productive Distinction:
-Analysis of Work_Hours to Distraction_Time ratios across clusters reveals:
-- Cluster 0 shows moderate work hours with moderate distraction
-- Cluster 2 shows low work hours with high distraction
-- Focus_Rating patterns across clusters: [To be analyzed]
+Busy vs. Productive Distinction: High-volume days were split into Busywork (high volume, low focus) and Flow State (high volume, high focus) using median focus threshold. An independent samples t-test on Focus_Rating between these groups was performed; results (means, t-statistic, p-value) indicate whether the distinction is statistically significant.
 
-Weekend Bleed Effect:
-Crosstabulation of clusters vs. weekend status:
-- Weekend days distribution across clusters: [To be calculated]
-- Association between weekend work/study patterns and mood: [To be analyzed]
+Weekend Bleed Effect: Work/Study Profile (based on Work_Hours + Study_Hours vs. median) was cross-tabulated with Is_Weekend. The proportion of weekend days with work/study profiles and mood comparisons (Weekend Bleed vs. Weekend Rest) were computed. A chi-square test (Work/Study Profile × Is_Weekend) was used to test association. Results are reported with test statistics and interpretation.
 
 V. Discussion
 5.1 Interpretation of Results
-The clustering analysis revealed three distinct behavioral profiles, with "The Commuter Grind" being the most common (64.2% of days). This suggests that the working student lifestyle is primarily characterized by significant travel time and moderate work/study activities. The "Distracted Recovery" profile (27.2% of days) indicates that approximately one-quarter of days involve high distraction and low productivity, which may represent necessary recovery periods or periods of low motivation.
+The distribution analysis (histograms, box plots) and time series trends endorse the dataset by showing interpretable distributions and temporal patterns. Correlation analysis reveals relationships between work/study hours, distraction, mood, and focus that are consistent with behavioral expectations.
 
-The correlation analysis suggests that productive days tend to combine both work and study activities, while travel time negatively impacts study opportunities. This finding aligns with the "Commuter Grind" cluster characteristics.
+Statistical tests (t-tests, chi-square) validate group differences (e.g., weekend vs. weekday) and associations between categorical variables. Hypothesis testing results for Recovery vs. Inertia, Busy vs. Productive, and Weekend Bleed provide evidence-based conclusions (e.g., inertia pattern dominance when rest days do not precede deep work; significant difference in focus between busywork and flow state days; weekend bleed proportion and mood comparison). Together, these results support the dataset as suitable for behavioral analysis and hypothesis-driven research.
 
 5.2 Comparison to Related Work
-The findings support previous research on the cost of distraction (Mark et al., 2008), as high distraction time is associated with lower task completion. The identification of distinct behavioral profiles through clustering aligns with Adomavicius et al. (2019), demonstrating that data analysis techniques can reveal meaningful patterns in personal behavioral data.
+The findings support previous research on the cost of distraction (Mark et al., 2008), as distraction time relates to focus and productivity measures. The use of statistical methods to validate patterns in personal data aligns with Adomavicius et al. (2019), demonstrating that descriptive and inferential techniques can reveal and validate meaningful patterns in behavioral datasets.
 
 5.3 Limitations
 Several limitations must be acknowledged:
@@ -194,25 +150,24 @@ Several limitations must be acknowledged:
 - Self-report bias: All data is self-reported, introducing potential measurement errors
 - Missing entries: Some days may have incomplete data despite imputation
 - Short data collection window: 81 days may not capture seasonal or long-term patterns
-- Cluster 1 interpretation: The "Deep Work" cluster shows unusual characteristics requiring further investigation
+- Threshold-based definitions: Rest Day, Deep Work Day, and Productivity Type depend on sample medians/quantiles and may not generalize
 
 5.4 Recommendations and Future Work
 For future research:
 - Extend data collection period to capture seasonal variations
 - Incorporate objective measurements (e.g., sleep trackers, activity monitors)
 - Include multiple subjects to improve generalizability
-- Investigate Cluster 1 characteristics more thoroughly
-- Explore time-series analysis to understand temporal patterns
+- Explore additional time-series or longitudinal models
 - Include additional variables (e.g., weather, social interactions, stress levels)
 
 VI. Conclusion
-This project successfully analyzed daily behavioral patterns using manual data logs and statistical techniques. The exploratory data analysis revealed distinct behavioral profiles, with "The Commuter Grind" being the dominant pattern. The clustering analysis provided a mathematical taxonomy of daily life, while statistical tests (ANOVA, chi-square) validated relationships between behavioral patterns and outcomes.
+This project successfully analyzed daily behavioral patterns using manual data logs and statistical techniques. Exploratory data analysis—including histograms, time series trends, box plots, and correlation matrices—characterized and endorsed the dataset. Statistical tests (independent samples t-tests, chi-square tests, correlation significance) validated relationships between variables and group differences. Hypothesis testing addressed the Recovery vs. Inertia, Busy vs. Productive, and Weekend Bleed hypotheses using threshold-based definitions and appropriate inferential methods.
 
 Key findings include:
-1. Travel time negatively correlates with study hours, highlighting the cost of commuting
-2. Three distinct behavioral profiles exist: Commuter Grind (64%), Distracted Recovery (27%), and Deep Work (9%)
-3. Behavioral patterns show relationships with mood and focus ratings, though statistical significance requires further validation
+1. Distribution and time series analyses support the dataset as suitable for behavioral analysis
+2. Correlation structure and statistical tests reveal significant relationships (e.g., focus differing between busywork and flow state days; weekend vs. weekday differences where applicable)
+3. Hypothesis testing results provide evidence-based conclusions on rest transitions, productivity types, and weekend work/study patterns
 
-The analysis demonstrates that productivity and well-being are not random; they exhibit patterns that can be identified through data analysis. These insights provide a foundation for evidence-based recommendations for improving daily routines and optimizing the balance between work, study, and personal well-being.
+The analysis demonstrates that productivity and well-being exhibit patterns that can be identified and validated through descriptive and inferential statistics. These insights provide a foundation for evidence-based recommendations for improving daily routines and optimizing the balance between work, study, and personal well-being.
 
 Future work should focus on extending the data collection period, incorporating objective measurements, and including multiple subjects to validate and generalize these findings.
