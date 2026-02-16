@@ -77,13 +77,6 @@ pip install pandas numpy matplotlib seaborn scikit-learn scipy jupyter statsmode
 - Mood_Rating (1-5)
 - Focus_Rating (1-5)
 
-## Identified Behavioral Profiles
-
-Based on clustering analysis (exploratory technique):
-1. **Cluster 0: "The Commuter Grind"** (64.2% of days) - High travel time, moderate work, moderate study
-2. **Cluster 1: "The Deep Work / WFH Day"** (8.6% of days) - Zero/low travel, high work and study
-3. **Cluster 2: "The Distracted Recovery"** (27.2% of days) - High distraction, high sleep, low tasks
-
 ## Statistical Methods Used
 
 - **Descriptive Statistics**: Mean, median, standard deviation, range
@@ -92,10 +85,6 @@ Based on clustering analysis (exploratory technique):
 - **ANOVA**: One-way ANOVA to test differences across clusters
 - **Chi-square Tests**: For categorical relationships
 - **Correlation Analysis**: To examine variable relationships
-
-## Archive
-
-The `archive/` folder contains optional modeling notebooks (`4predictive_model.ipynb`, `5mlr_analysis.ipynb`) that are not part of the core data science analysis focus. These are kept for reference but are not required deliverables.
 
 ## Author
 
