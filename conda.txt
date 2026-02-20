@@ -12,5 +12,5 @@ pip install seaborn
 pip install scikit-learn 
 pip install scipy 
 pip install jupyter
-pip install statsmodel
+pip install statsmodels
 # done
